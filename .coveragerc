@@ -1,0 +1,10 @@
+[run]
+branch = True
+source =
+    requests_tracker
+
+[report]
+ignore_errors = True
+omit =
+    */migrations/*
+    */tests/*
