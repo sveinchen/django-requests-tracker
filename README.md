@@ -18,7 +18,7 @@ $ easy_install django-requests-tracker
 
 ## Configuration
 
-1. Put `requests_tracker` into your `INSTALLED_APPS`:
+Put `requests_tracker` into your `INSTALLED_APPS`:
 
 ```python
     INSTALLED_APPS = [
@@ -27,7 +27,7 @@ $ easy_install django-requests-tracker
     ]
 ```
 
-2. Create `requests_tracker` database tables by running:
+Then create `requests_tracker` database tables by running:
 
 ```bash
 $ python manage.py migrate
