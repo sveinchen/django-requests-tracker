@@ -7,13 +7,13 @@ Tracking http requests send by [python-requests](https://github.com/kennethreitz
 To install using `pip`:
 
 ```bash
-pip install django-requests-tracker
+$ pip install django-requests-tracker
 ```
 
 To install using `easy_install`:
 
 ```bash
-easy_install django-requests-tracker
+$ easy_install django-requests-tracker
 ```
 
 ## Configuration
@@ -30,5 +30,5 @@ easy_install django-requests-tracker
 2. Create `requests_tracker` database tables by running:
 
 ```bash
-python manage.py migrate
+$ python manage.py migrate
 ```
