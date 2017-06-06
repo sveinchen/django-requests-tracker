@@ -32,7 +32,7 @@ class Session(_Session):
                 verify=None,
                 cert=None,
                 json=None,
-                api_uid=None):
+                identity=None):
         """
         patched requests.session.Session
         """
@@ -69,7 +69,7 @@ class Session(_Session):
         pre_send.send(sender=self.request,
                       uid=uid,
                       prep=prep,
-                      api_uid=api_uid)
+                      identity=identity)
 
         # Send the request.
         try:

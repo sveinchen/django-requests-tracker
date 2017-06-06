@@ -18,7 +18,7 @@ class Record(models.Model):
 
     # tracking record info
     uid = models.UUIDField(unique=True)
-    api_uid = models.CharField(
+    identity = models.CharField(
         max_length=64,
         blank=True,
         default=''

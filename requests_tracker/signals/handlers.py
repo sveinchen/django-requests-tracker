@@ -13,15 +13,15 @@ from requests_tracker.filtering import filters
 logger = logging.getLogger(__name__)
 
 
-def pre_send_handler(sender, uid, prep, api_uid, **kwargs):
+def pre_send_handler(sender, uid, prep, identity, **kwargs):
     """handle `requests_tracker.signals.pre_send` signal"""
 
-    setattr(prep, 'api_uid', api_uid)
+    setattr(prep, 'identity', identity)
 
     if filters.rt_filter(prep):
         rt_kwargs = {
             'uid': uid,
-            'api_uid': api_uid or '',
+            'identity': identity or '',
             'method': prep.method,
             'request_message': http_message.render_request_message(prep),
         }

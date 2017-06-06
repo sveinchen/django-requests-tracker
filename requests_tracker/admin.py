@@ -8,11 +8,12 @@ class RecordAdmin(admin.ModelAdmin):
 
     list_display = (
         '__unicode__',
-        'api_uid', 'status_code',
+        'identity', 'status_code',
         'show_date_created', 'duration',
         'state', 'remark'
     )
-    list_filter = ('date_created', 'method', 'api_uid', 'status_code', 'state')
+    list_filter = ('date_created', 'method', 'identity',
+                   'status_code', 'state')
     search_fields = ('request_message', 'response_message')
 
     fieldsets = (
@@ -26,7 +27,7 @@ class RecordAdmin(admin.ModelAdmin):
             'fields': ('status_code', 'response_message',),
         }),
         ("Other Infamation", {
-            'fields': ('api_uid', 'state', 'remark',),
+            'fields': ('identity', 'state', 'remark',),
         }),
         ("Important Datetimes", {
             'fields': ('date_created', 'duration',),
@@ -37,7 +38,7 @@ class RecordAdmin(admin.ModelAdmin):
         'uid',
         'method', 'url',
         'status_code',
-        'api_uid', 'state', 'remark',
+        'identity', 'state', 'remark',
         'date_created', 'duration'
     )
 

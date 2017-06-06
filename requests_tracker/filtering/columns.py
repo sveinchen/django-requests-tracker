@@ -3,7 +3,7 @@ requests_tracker.filtering.columns
 ==================================
 """
 
-API_UID = 0
+IDENTITY = 0
 METHOD = 10
 SCHEME = 100
 NETLOC = 101
@@ -11,11 +11,11 @@ PATH = 102
 QUERY = 103
 FRAGMENT = 104
 
-ALL_COLUMNS = [API_UID, METHOD,
+ALL_COLUMNS = [IDENTITY, METHOD,
                SCHEME, NETLOC, PATH, QUERY, FRAGMENT]
 
 COLUMN_CHOICES = (
-    (API_UID, 'api_uid'),
+    (IDENTITY, 'identity'),
     (METHOD, 'method'),
     (SCHEME, 'url:scheme'),
     (NETLOC, 'url:netloc'),
