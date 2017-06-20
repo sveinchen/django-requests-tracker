@@ -6,6 +6,6 @@ Tracking http requests send by python-requests inside a Django application.
 Learn more at https://sveinchen.github.io/django-requests-tracker/
 """
 
-__version__ = '2.10.3'
+__version__ = '2.10.4'
 
 default_app_config = 'requests_tracker.apps.RequestsTrackerConfig'
