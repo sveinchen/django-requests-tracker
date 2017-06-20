@@ -6,6 +6,8 @@ from requests_tracker.models import Record, Filter, Exclude
 
 class RecordAdmin(admin.ModelAdmin):
 
+    date_hierarchy = 'date_created'
+
     list_display = (
         '__unicode__',
         'identity', 'status_code',
@@ -14,7 +16,7 @@ class RecordAdmin(admin.ModelAdmin):
     )
     list_filter = ('date_created', 'method', 'identity',
                    'status_code', 'state')
-    search_fields = ('request_message', 'response_message')
+    search_fields = ('request_message__content', 'response_message__content')
 
     fieldsets = (
         (None, {
@@ -36,8 +38,8 @@ class RecordAdmin(admin.ModelAdmin):
 
     readonly_fields = (
         'uid',
-        'method', 'url',
-        'status_code',
+        'method', 'url', 'request_message',
+        'status_code', 'response_message',
         'identity', 'state', 'remark',
         'date_created', 'duration'
     )

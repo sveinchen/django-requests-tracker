@@ -14,6 +14,14 @@ from requests_tracker.filtering import categories
 from requests_tracker.filtering import columns
 
 
+class HttpMessage(models.Model):
+
+    content = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return unicode(self.content)
+
+
 class Record(models.Model):
 
     # tracking record info
@@ -41,11 +49,21 @@ class Record(models.Model):
         default=http_methods.GET
     )
     url = models.URLField(max_length=255)
-    request_message = models.TextField(blank=True)
+    request_message = models.ForeignKey(
+        HttpMessage,
+        null=True,
+        blank=True,
+        related_name='record_set_for_request_message',
+    )
 
     # response info
     status_code = models.PositiveSmallIntegerField(default=0)
-    response_message = models.TextField(blank=True)
+    response_message = models.ForeignKey(
+        HttpMessage,
+        null=True,
+        blank=True,
+        related_name='record_set_for_response_message',
+    )
 
     # important datetimes
     date_created = models.DateTimeField(default=now)

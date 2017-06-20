@@ -6,7 +6,7 @@ import logging
 from urlparse import urlsplit, urlunsplit
 
 from requests_tracker import states
-from requests_tracker.models import Record
+from requests_tracker.models import HttpMessage, Record
 from requests_tracker.utils import http_message
 from requests_tracker.filtering import filters
 
@@ -19,11 +19,14 @@ def pre_send_handler(sender, uid, prep, identity, **kwargs):
     setattr(prep, 'identity', identity)
 
     if filters.rt_filter(prep):
+        request_message = HttpMessage.objects.create(
+            content=http_message.render_request_message(prep)
+        )
         rt_kwargs = {
             'uid': uid,
             'identity': identity or '',
             'method': prep.method,
-            'request_message': http_message.render_request_message(prep),
+            'request_message': request_message,
         }
 
         _ = urlsplit(prep.url)
@@ -45,9 +48,12 @@ def response_handler(sender, uid, resp, duration, **kwargs):
     except Record.DoesNotExist:
         logger.info("uid does not exist: %r" % uid)
     else:
+        response_message = HttpMessage.objects.create(
+            content=http_message.render_response_message(resp)
+        )
         rt_kwargs = {
             'status_code': resp.status_code,
-            'response_message': http_message.render_response_message(resp),
+            'response_message': response_message,
             'remark': resp.reason,
             'duration': duration,
         }
@@ -62,10 +68,13 @@ def request_failed_handler(sender, uid, exception, duration, **kwargs):
     except Record.DoesNotExist:
         logger.info("uid does not exist: %r" % uid)
     else:
+        response_message = HttpMessage.objects.create(
+            content=exception.message
+        )
         rt_kwargs = {
             'duration': duration,
             'remark': exception.__class__.__name__,
-            'response_message': exception.message,
+            'response_message': response_message,
         }
         record.transit(states.FAILURE, **rt_kwargs)
 

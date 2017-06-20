@@ -44,6 +44,13 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='HttpMessage',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('content', models.TextField(blank=True)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Record',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -53,11 +60,11 @@ class Migration(migrations.Migration):
                 ('remark', models.CharField(default=b'', max_length=255, blank=True)),
                 ('method', models.CharField(default=b'GET', max_length=8, choices=[(b'HEAD', b'HEAD'), (b'GET', b'GET'), (b'PATCH', b'PATCH'), (b'PUT', b'PUT'), (b'POST', b'POST'), (b'OPTIONS', b'OPTIONS'), (b'DELETE', b'DELETE')])),
                 ('url', models.URLField(max_length=255)),
-                ('request_message', models.TextField(blank=True)),
                 ('status_code', models.PositiveSmallIntegerField(default=0)),
-                ('response_message', models.TextField(blank=True)),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now)),
                 ('duration', models.DurationField(null=True, blank=True)),
+                ('request_message', models.ForeignKey(related_name='record_set_for_request_message', blank=True, to='requests_tracker.HttpMessage', null=True)),
+                ('response_message', models.ForeignKey(related_name='record_set_for_response_message', blank=True, to='requests_tracker.HttpMessage', null=True)),
             ],
         ),
     ]
